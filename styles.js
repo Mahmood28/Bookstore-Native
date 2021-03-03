@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { Button, Icon, Text, View } from "native-base";
 
 export const StyledView = styled.View`
   align-items: center;
@@ -19,4 +20,8 @@ export const StyledText = styled.Text`
 export const StyledImage = styled.Image`
   width: 150px;
   height: 150px;
+`;
+
+export const StyledIcon = styled(Icon)`
+  color: white;
 `;

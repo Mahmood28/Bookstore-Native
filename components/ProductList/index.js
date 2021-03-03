@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as RN from "react-native";
-import { Container, Content, List, Text } from "native-base";
+import { Container, Content, List, Text, View } from "native-base";
 import ProductItem from "./ProductItem";
 
 const ProductList = ({ products }) => {
@@ -8,11 +8,11 @@ const ProductList = ({ products }) => {
     <ProductItem product={product} key={product.id} />
   ));
   return (
-    <Container>
-      <Content>
-        <Text> {productList} </Text>
-      </Content>
-    </Container>
+    <Content>
+      <Container>
+        <List>{productList}</List>
+      </Container>
+    </Content>
   );
 };
 

@@ -14,11 +14,7 @@ const ShopList = ({ navigation }) => {
     <ShopItem key={shop.id} shop={shop} navigation={navigation} />
   ));
 
-  return (
-    <Content>
-      <List>{shopList}</List>
-    </Content>
-  );
+  return <List>{shopList}</List>;
 };
 
 export default ShopList;

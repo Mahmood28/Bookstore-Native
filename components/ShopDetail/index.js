@@ -1,6 +1,6 @@
 import React from "react";
 import * as RN from "react-native";
-import { Spinner } from "native-base";
+import { Spinner, View } from "native-base";
 import ProductList from "../ProductList";
 import { useSelector } from "react-redux";
 import { ShopDetailImage, ShopDetailTitle, ShopDetailWrapper } from "./styles";
@@ -16,10 +16,10 @@ const ShopDetail = ({ navigation, route }) => {
   );
   return (
     <>
-      <ShopDetailWrapper>
-        <ShopDetailImage source={{ uri: shop.image }} />
-        <ShopDetailTitle>{shop.name}</ShopDetailTitle>
-      </ShopDetailWrapper>
+      {/* <ShopDetailWrapper>
+        <ShopDetailImage source={{ uri: shop.image }} /> */}
+      {/* <ShopDetailTitle>{shop.name}</ShopDetailTitle> */}
+      {/* </ShopDetailWrapper> */}
       <ProductList products={shopProducts} />
     </>
   );
