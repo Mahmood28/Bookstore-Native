@@ -1,11 +1,14 @@
-import { ADD_ITEM, REMOVE_ITEM, CHECKOUT_ITEMS } from "../actions/types";
+import {
+  ADD_ITEM,
+  REMOVE_ITEM,
+  CHECKOUT_ITEMS,
+  FETCH_CART,
+} from "../actions/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
-  items: [
-    { id: 1, quantity: 2 },
-    { id: 2, quantity: 1 },
-    { id: 7, quantity: 1 },
-  ],
+  items: [],
+  loading: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,7 +16,8 @@ const reducer = (state = initialState, action) => {
     case ADD_ITEM:
       const { newItem } = action.payload;
       const foundItem = state.items.find((item) => item.id === newItem.id);
-      return {
+      console.log(JSON.stringify(state.items));
+      const newState = {
         ...state,
         items: foundItem
           ? state.items.map((item) =>
@@ -26,18 +30,30 @@ const reducer = (state = initialState, action) => {
             )
           : [...state.items, newItem],
       };
+      AsyncStorage.setItem("myCart", JSON.stringify(newState.items));
+      return newState;
     case REMOVE_ITEM:
       const { productId } = action.payload;
-      return {
+      const updatedState = {
         ...state,
         items: state.items.filter((item) => item.id !== productId),
       };
+      AsyncStorage.setItem("myCart", JSON.stringify(updatedState.items));
+      return updatedState;
 
     case CHECKOUT_ITEMS:
       alert("Thank you for your purchase! Have a great day 😃");
       return {
         items: [],
       };
+
+    case FETCH_CART:
+      return {
+        ...state,
+        items: action.payload ?? [],
+        loading: false,
+      };
+
     default:
       return state;
   }

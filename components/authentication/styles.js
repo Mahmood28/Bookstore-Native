@@ -45,3 +45,8 @@ export const AuthOther = styled.Text`
   color: black;
   margin-top: 15px;
 `;
+
+export const Error = styled(AuthOther)`
+  color: red;
+  text-align: left;
+`;

@@ -7,13 +7,12 @@ import { CartTextStyled } from "./styles";
 import { useState } from "react";
 const CartButton = () => {
   const navigation = useNavigation();
-  const { items } = useSelector((state) => state.cartReducer);
+  const { items, loading } = useSelector((state) => state.cartReducer);
 
   let totalQuantity =
-    items.length === 0
+    loading || !items || items.length === 0
       ? ""
       : items.map((item) => item.quantity).reduce((a, b) => a + b);
-
   return (
     <Button
       iconLeft

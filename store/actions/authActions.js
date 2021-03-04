@@ -22,12 +22,10 @@ export const signup = (newUser, navigation) => {
   return async (dispatch) => {
     try {
       const res = await instance.post("signup", newUser);
-      if (res) {
-        console.log("AuthStore -> signin -> res.data.token", res.data.token);
-        alert("signed up");
-        navigation.push("CartList");
-      }
-      dispatch(setUser(res.data.token));
+      await dispatch(setUser(res.data.token));
+      console.log("AuthStore -> signin -> res.data.token", res.data.token);
+      alert("signed up");
+      navigation.goBack();
     } catch (error) {
       console.error(error);
     }
@@ -38,29 +36,30 @@ export const signin = (userData, navigation) => {
   return async (dispatch) => {
     try {
       const res = await instance.post("signin", userData);
-      if (res) {
-        console.log("AuthStore -> signin -> res.data.token", res.data.token);
-        alert("signed in");
-        navigation.push("CartList");
-      }
-      dispatch(setUser(res.data.token));
+      await dispatch(setUser(res.data.token));
+      console.log("AuthStore -> signin -> res.data.token", res.data.token);
+      alert("signed in");
+      navigation.goBack();
     } catch (error) {
       console.error(error);
     }
   };
 };
 
-export const signout = async () => {
-  try {
-    await AsyncStorage.removeItem("myToken");
-    delete instance.defaults.headers.common.Authorization;
-    dispatch({
-      type: SET_USER,
-      payload: null,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+export const signout = () => {
+  return async (dispatch) => {
+    try {
+      await AsyncStorage.removeItem("myToken");
+      delete instance.defaults.headers.common.Authorization;
+      await dispatch({
+        type: SET_USER,
+        payload: null,
+      });
+      alert("signed out");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const checkForToken = () => async (dispatch) => {
