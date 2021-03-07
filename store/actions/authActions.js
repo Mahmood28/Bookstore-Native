@@ -25,7 +25,7 @@ export const signup = (newUser, navigation) => {
       await dispatch(setUser(res.data.token));
       console.log("AuthStore -> signin -> res.data.token", res.data.token);
       alert("signed up");
-      navigation.goBack();
+      navigation.replace("CartList");
     } catch (error) {
       console.error(error);
     }

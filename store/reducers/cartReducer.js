@@ -15,8 +15,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
       const { newItem } = action.payload;
-      const foundItem = state.items.find((item) => item.id === newItem.id);
-      console.log(JSON.stringify(state.items));
+      const foundItem = state.items.find(
+        (item) => item.productId === newItem.productId
+      );
       const newState = {
         ...state,
         items: foundItem
@@ -31,18 +32,20 @@ const reducer = (state = initialState, action) => {
           : [...state.items, newItem],
       };
       AsyncStorage.setItem("myCart", JSON.stringify(newState.items));
+      console.log(newState.items);
       return newState;
     case REMOVE_ITEM:
       const { productId } = action.payload;
       const updatedState = {
         ...state,
-        items: state.items.filter((item) => item.id !== productId),
+        items: state.items.filter((item) => item.productId !== productId),
       };
       AsyncStorage.setItem("myCart", JSON.stringify(updatedState.items));
       return updatedState;
 
     case CHECKOUT_ITEMS:
       alert("Thank you for your purchase! Have a great day 😃");
+      AsyncStorage.removeItem("myCart");
       return {
         items: [],
       };

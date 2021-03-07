@@ -9,9 +9,10 @@ import {
 } from "./styles";
 import { Button, Icon, Text, View } from "native-base";
 import { signout } from "../../store/actions/authActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.authReducer);
   return (
     <HomeBackground
       style={{ flex: 1, width: "100%", height: "100%" }}
@@ -34,9 +35,11 @@ const Home = ({ navigation }) => {
           <Icon name="book" />
           <Text>Take a look at our publishers</Text>
         </Button>
-        <Button onPress={() => dispatch(signout())}>
-          <Text>Sign out</Text>
-        </Button>
+        {user && (
+          <Button onPress={() => dispatch(signout())}>
+            <Text>Sign out</Text>
+          </Button>
+        )}
       </BottomStyling>
     </HomeBackground>
   );

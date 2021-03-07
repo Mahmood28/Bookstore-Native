@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as RN from "react-native";
+import { Alert } from "react-native";
 import {
   Container,
   Header,
@@ -25,9 +25,20 @@ const CartList = ({ navigation }) => {
   if (loading) return <Loading />;
   const handlePress = () => {
     user
-      ? dispatch(checkout())
-      : alert("Please log in to proceed with your order.");
-    navigation.push(user ? "Home" : "Signin");
+      ? dispatch(checkout(items))
+      : Alert.alert(
+          "Checkout Request",
+          "Please log in to proceed with your order.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "Sign In", onPress: () => navigation.navigate("Signin") },
+          ],
+          { cancelable: false }
+        );
   };
 
   if (items.length === 0)
@@ -38,7 +49,7 @@ const CartList = ({ navigation }) => {
     );
   const cartList = items
     .map((item) => ({
-      ...products.find((product) => item.id === product.id),
+      ...products.find((product) => item.productId === product.id),
       quantity: item.quantity,
     }))
     .map((product) => <CartItem key={product.id} product={product} />);

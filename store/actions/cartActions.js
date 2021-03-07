@@ -13,9 +13,17 @@ export const deleteItemFromCart = (productId) => {
   return { type: REMOVE_ITEM, payload: { productId } };
 };
 
-export const checkout = () => {
-  return {
-    type: CHECKOUT_ITEMS,
+export const checkout = (cart) => {
+  return async (dispatch) => {
+    try {
+      const res = await instance.post("checkout", cart);
+      console.log(cart);
+      dispatch({
+        type: CHECKOUT_ITEMS,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 

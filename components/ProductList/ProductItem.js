@@ -24,10 +24,6 @@ import { useState } from "react";
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
-  const handleAdd = () => {
-    const newItem = { quantity, id: product.id };
-    dispatch(addItemToCart(newItem));
-  };
 
   return (
     <ListItem thumbnail>
@@ -53,7 +49,12 @@ const ProductItem = ({ product }) => {
           value={quantity}
           onChange={setQuantity}
         />
-        <Button primary onPress={handleAdd}>
+        <Button
+          primary
+          onPress={() =>
+            dispatch(addItemToCart({ quantity, productId: product.id }))
+          }
+        >
           <Text>Add</Text>
         </Button>
       </Right>
